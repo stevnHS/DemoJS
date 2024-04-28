@@ -1,0 +1,45 @@
+table {
+  color: #eee;
+  border-collapse: collapse;
+  border: 2px solid #2a2f4f;
+}
+td {
+  border-right: 2px solid #2a2f4f;
+  padding: 5px;
+  background-color: #e5beec;
+  color: #2a2f4f;
+}
+
+/* 按鈕 */
+.arrow-btn {
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0 6px 8px #00000030;
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.arrow-btn-next {
+  left: auto;
+  right: 20px;
+}
+
+.arrow-btn svg {
+  fill: #333;
+  position: absolute;
+  height: 80%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-60%, -50%);
+}
+
+.arrow-btn-next svg {
+  transform: translate(-40%, -50%);
+}
