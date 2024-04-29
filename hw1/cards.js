@@ -1,6 +1,6 @@
 const arrowBtns = document.querySelectorAll(".arrow-btn");
 const cardBtns = document.querySelectorAll(".card");
-let currentCard = 2;
+let currentCard = 0;
 let dir = 1;
 moveCards();
 
@@ -46,12 +46,12 @@ cardBtns.forEach((btn, i) => {
       "box-shadow": () =>
         i == currentCard ? "0 6px 11px #00000030" : "0 0px 0px #00000030",
     });
-
-  btn.onclick = (e) => {
-    dir = i < currentCard ? 1 : -1;
-    currentCard = i;
-    moveCards(0.75);
-  };
+  // 不用點擊
+  // btn.onclick = (e) => {
+  //   dir = i < currentCard ? 1 : -1;
+  //   currentCard = i;
+  //   moveCards(0.75);
+  // };
 });
 
 function moveCards(dur = 0) {

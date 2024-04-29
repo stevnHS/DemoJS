@@ -10,6 +10,11 @@ td {
   color: #2a2f4f;
 }
 /* Cards */
+.cards-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  position: relative;
+}
 .cards-wrapper::after {
   content: "";
   display: block;
@@ -26,6 +31,30 @@ td {
     #eee 100%
   );
   pointer-events: none;
+}
+.cards {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-110px);
+  display: flex;
+  flex-direction: row;
+  width: 1300px;
+  justify-content: space-between;
+}
+
+.card {
+  width: 700px;
+  padding: 0px 0px 60px 0px;
+  background-color: #917fb3;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  box-sizing: border-box;
 }
 /* 按鈕 */
 .arrow-btn {
