@@ -9,7 +9,24 @@ td {
   background-color: #e5beec;
   color: #2a2f4f;
 }
-
+/* Cards */
+.cards-wrapper::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #eee 0%,
+    #ffffff00 30%,
+    #ffffff00 70%,
+    #eee 100%
+  );
+  pointer-events: none;
+}
 /* 按鈕 */
 .arrow-btn {
   width: 40px;
