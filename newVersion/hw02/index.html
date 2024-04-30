@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form</title>
+    <style>
+      fieldset {
+        border: 5px solid red;
+        border-radius: 5px;
+      }
+      legend {
+        font-weight: bold;
+      }
+      hr {
+        border: 1px dashed grey;
+      }
+      p {
+        margin: 5px 0 0 0;
+        color: grey;
+        font-size: small;
+      }
+      .tip {
+        display: none;
+      }
+      .tip-show {
+        display: inline;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <fieldset>
+        <legend>Form Check</legend>
+        <label for="name">姓名</label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          value="王a建民"
+          onchange="checkName()"
+        />
+        <span class="tip" id="tip-error">
+          <img src="icon_error.svg" alt="icon" width="15" />錯誤
+        </span>
+        <span class="tip" id="tip-good">
+          <img src="icon_good.svg" alt="icon" width="15" />成功
+        </span>
+        <p>1. 不可空白 2. 至少兩個字以上 3. 必須全”中文字"</p>
+
+        <hr />
+        <label for="pwd">密碼</label>
+        <input type="password" name="pwd" id="pwd" onchange="checkPassword()" />
+        <p>1. 不可空白 2. 至少 6 個字且必須包含英數字、特殊字元 [!@#$%^&*]</p>
+        <hr />
+        <label for="date">日期</label>
+        <input type="text" name="name" id="date" onchange="checkDate()" />
+        <p>格式:西元年/月/日 (yyyy/mm/dd)</p>
+      </fieldset>
+    </form>
+    <script src="index.js"></script>
+  </body>
+</html>

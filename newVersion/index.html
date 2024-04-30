@@ -5,32 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Javascript Homework</title>
     <link rel="stylesheet" href="layout.css" />
-    <link rel="stylesheet" href="hw01.css" />
+    <link rel="stylesheet" href="hw01/hw01.css" />
   </head>
   <body>
     <main>
-      <!-- Navgation Bar -->
+      <!-- Navigation Bar -->
+      <!-- .main-menu .logo .nav-item .nav-text -->
       <nav class="main-menu">
         <img class="logo" src="Assets/Logo.svg" width="30" height="30" />
         <ul>
-          <li class="nav-item">
-            <a href="#">
+          <li class="nav-item" id="nav-math">
+            <div>
               <img src="Assets/navMath.svg" width="30" alt="" />
               <span class="nav-text">九九乘法表</span>
-            </a>
+            </div>
+          </li>
+          <li class="nav-item" id="nav-form">
+            <div>
+              <img src="Assets/navForm.svg" width="30" alt="" />
+              <span class="nav-text">表單製作</span>
+            </div>
           </li>
         </ul>
       </nav>
 
-      <section class="content">
+      <section class="content" id="content">
         <!-- Start -->
-        <section class="container">
-          <h3>九九乘法表</h3>
-          <table id="table"></table>
-        </section>
+
         <!-- End -->
       </section>
     </main>
-    <script src="hw01.js"></script>
+    <script src="hw01/hw01.js"></script>
   </body>
 </html>
