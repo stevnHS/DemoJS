@@ -1,7 +1,9 @@
 const navMath = document.getElementById("nav-math");
 const navForm = document.getElementById("nav-form");
+const navRating = document.getElementById("nav-rating");
 navMath.addEventListener("click", showMath);
 navForm.addEventListener("click", showForm);
+navRating.addEventListener("click", showRating);
 
 function showMath() {
   const table = document.createElement("table");
@@ -175,6 +177,73 @@ function showForm() {
     } else {
       tipDateGood.classList.remove("tip-show");
       tipDateError.classList.add("tip-show");
+    }
+  }
+}
+function showRating() {
+  const result = document.createElement("p");
+  const star1 = document.createElement("img");
+  const star2 = document.createElement("img");
+  const star3 = document.createElement("img");
+  const star4 = document.createElement("img");
+  const star5 = document.createElement("img");
+  const stars = [star1, star2, star3, star4, star5];
+  // init
+  (() => {
+    const content = document.getElementById("content");
+    content.innerHTML = "";
+    const h2 = document.createElement("h2");
+    h2.innerText = "評點製作";
+    content.appendChild(h2);
+
+    // 作答區
+    const container = document.createElement("div");
+    content.appendChild(container);
+
+    for (let star of stars) {
+      container.appendChild(star);
+      star.setAttribute("src", "Assets/img_star.gif");
+      star.addEventListener("mouseout", mouseOutHandler);
+      star.addEventListener("mousemove", mouseMoveHandler);
+      star.addEventListener("click", clickHandler);
+      star.addEventListener("dblclick", dblClickHandler);
+    }
+
+    const p = document.createElement("p");
+    content.appendChild(p);
+    p.innerText = "單擊星星可評分，雙擊星星可重製";
+
+    content.appendChild(result);
+  })();
+
+  function mouseMoveHandler(e) {
+    for (let item of stars) {
+      item.setAttribute("src", "Assets/img_stared.gif");
+      if (e.target == item) break;
+    }
+  }
+  function mouseOutHandler(e) {
+    for (let item of stars) {
+      item.setAttribute("src", "Assets/img_star.gif");
+      if (e.target == item) break;
+    }
+  }
+  function clickHandler(e) {
+    // 註銷所有事件
+    result.innerText = `評分為...${stars.indexOf(e.target) + 1}`;
+    for (let item of stars) {
+      item.removeEventListener("mousemove", mouseMoveHandler);
+      item.removeEventListener("mouseout", mouseOutHandler);
+      item.removeEventListener("click", clickHandler);
+    }
+  }
+  function dblClickHandler(e) {
+    result.innerText = "";
+    for (let item of stars) {
+      item.setAttribute("src", "Assets/img_star.gif");
+      item.addEventListener("mousemove", mouseMoveHandler);
+      item.addEventListener("mouseout", mouseOutHandler);
+      item.addEventListener("click", clickHandler);
     }
   }
 }

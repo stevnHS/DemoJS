@@ -40,7 +40,7 @@ nav ul li a {
 
 main {
   display: grid;
-  grid-template-columns: 13% 87%;
+  grid-template-columns: 20% 80%;
   width: 100%;
   margin: 40px;
   background: rgb(254, 254, 254);
