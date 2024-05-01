@@ -32,8 +32,12 @@ body {
 nav ul {
   list-style-type: none;
 }
-nav ul li a {
-  text-decoration: none;
+nav ul li {
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 /* MAIN MENU */
@@ -54,6 +58,10 @@ main {
   background: rgb(73, 57, 113);
   padding-top: 10px;
   border-radius: 15px 0 0 15px;
+}
+.nav-text {
+  text-indent: 0.5em;
+  color: #fff;
 }
 
 .nav-item b:nth-child(1) {

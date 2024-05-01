@@ -1,9 +1,16 @@
+const content = document.getElementById("content");
 const navMath = document.getElementById("nav-math");
 const navForm = document.getElementById("nav-form");
 const navRating = document.getElementById("nav-rating");
+const navPhotos = document.getElementById("nav-photos");
+const navCalendar = document.getElementById("nav-calendar");
+const navPostal = document.getElementById("nav-postal");
 navMath.addEventListener("click", showMath);
 navForm.addEventListener("click", showForm);
 navRating.addEventListener("click", showRating);
+navPhotos.addEventListener("click", showPhotos);
+navCalendar.addEventListener("click", showCalendar);
+navPostal.addEventListener("click", showPostal);
 
 function showMath() {
   const table = document.createElement("table");
@@ -246,4 +253,31 @@ function showRating() {
       item.addEventListener("click", clickHandler);
     }
   }
+}
+
+function showPhotos() {
+  (() => {
+    initializeContent("廣告輪播");
+
+    const img = document.createElement("img");
+    img.setAttribute("src", "Assets/山.jpg");
+    content.appendChild(img);
+  })();
+}
+
+function showCalendar() {
+  (() => {
+    initializeContent("日曆製作");
+  })();
+}
+function showPostal() {
+  (() => {
+    initializeContent("郵遞區號");
+  })();
+}
+function initializeContent(title) {
+  content.innerHTML = "";
+  const h2 = document.createElement("h2");
+  h2.innerText = title;
+  content.appendChild(h2);
 }
