@@ -271,9 +271,48 @@ function showCalendar() {
   })();
 }
 function showPostal() {
+  let cityIndex = 0;
+  let districtIndex = 0;
+  const elSelectCities = document.createElement("select");
+  const elSelectDistricts = document.createElement("select");
   (() => {
     initializeContent("郵遞區號");
+
+    data.forEach((city, index) => {
+      elSelectCities.append(new Option(city.name, index));
+    });
+    showCityDistricts();
+    //--- City 被選中後 ---
+    //1.清空目前的區域  2.顯示有哪些鄉鎮市區可選擇
+    elSelectCities.addEventListener("change", (e) => {
+      cityIndex = e.target.value;
+      showCityDistricts();
+    });
+    // District 被選中後
+    elSelectDistricts.addEventListener("input", (e) => {
+      districtIndex = e.target.value;
+      console.log(
+        data[cityIndex].name +
+          " " +
+          data[cityIndex].districts[districtIndex].name
+      );
+    });
+
+    // const elTable = document.createElement("table");
+    // const elTr = document.createElement("tr");
+
+    content.append(elSelectCities);
+    content.append(elSelectDistricts);
   })();
+  function showCityDistricts() {
+    elSelectDistricts.innerHTML = "";
+    data[cityIndex].districts.forEach((dist, index) => {
+      elSelectDistricts.appendChild(
+        new Option(`(${dist.zip})${dist.name}`, index),
+        index
+      );
+    });
+  }
 }
 function initializeContent(title) {
   content.innerHTML = "";
