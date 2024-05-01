@@ -298,11 +298,33 @@ function showPostal() {
       );
     });
 
-    // const elTable = document.createElement("table");
-    // const elTr = document.createElement("tr");
+    const elTable = document.createElement("table");
+    data.forEach((city) => {
+      const elTdCName = document.createElement("td");
+      elTdCName.innerText = city.name;
+      elTdCName.setAttribute("rowspan", city.districts.length);
 
+      city.districts.forEach((dist, i) => {
+        const elTr = document.createElement("tr");
+        const elTdName = document.createElement("td");
+        const elTdZip = document.createElement("td");
+        elTdName.innerText = dist.name;
+        elTdZip.innerText = dist.zip;
+        elTdName.style.borderBottom = "1px solid #000";
+        elTdZip.style.borderBottom = "1px solid #000";
+        if (i === 0) elTr.appendChild(elTdCName);
+        if (i === city.districts.length - 1) {
+          elTdCName.style.borderBottom = "1px solid #000";
+        }
+        elTr.append(elTdZip, elTdName);
+        elTable.appendChild(elTr);
+      });
+    });
+
+    // todo:排版
     content.append(elSelectCities);
     content.append(elSelectDistricts);
+    content.appendChild(elTable);
   })();
   function showCityDistricts() {
     elSelectDistricts.innerHTML = "";
