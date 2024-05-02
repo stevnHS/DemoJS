@@ -142,3 +142,7 @@ p {
 .tip-show {
   display: inline;
 }
+/* hw06 */
+.focus {
+  background-color: red;
+}

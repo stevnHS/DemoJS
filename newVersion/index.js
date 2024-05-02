@@ -273,8 +273,11 @@ function showCalendar() {
 function showPostal() {
   let cityIndex = 0;
   let districtIndex = 0;
+  let tdsCity = [];
+  let tdsDistirict = [];
   const elSelectCities = document.createElement("select");
   const elSelectDistricts = document.createElement("select");
+
   (() => {
     initializeContent("郵遞區號");
 
@@ -286,42 +289,49 @@ function showPostal() {
     //1.清空目前的區域  2.顯示有哪些鄉鎮市區可選擇
     elSelectCities.addEventListener("change", (e) => {
       cityIndex = e.target.value;
+      cancelFocusDistrict();
+      focusCity();
       showCityDistricts();
     });
     // District 被選中後
-    elSelectDistricts.addEventListener("input", (e) => {
+    elSelectDistricts.addEventListener("change", (e) => {
       districtIndex = e.target.value;
       console.log(
         data[cityIndex].name +
           " " +
           data[cityIndex].districts[districtIndex].name
       );
+      focusDistrict();
     });
 
+    // 畫出表格
     const elTable = document.createElement("table");
     data.forEach((city) => {
       const elTdCName = document.createElement("td");
       elTdCName.innerText = city.name;
       elTdCName.setAttribute("rowspan", city.districts.length);
-
+      tdsCity.push(elTdCName);
+      let cityDistricts = [];
       city.districts.forEach((dist, i) => {
+        let districts = [];
         const elTr = document.createElement("tr");
         const elTdName = document.createElement("td");
+        districts.push(elTdName);
         const elTdZip = document.createElement("td");
+        districts.push(elTdZip);
         elTdName.innerText = dist.name;
         elTdZip.innerText = dist.zip;
         elTdName.style.borderBottom = "1px solid #000";
         elTdZip.style.borderBottom = "1px solid #000";
+        elTdCName.style.borderBottom = "1px solid #000";
         if (i === 0) elTr.appendChild(elTdCName);
-        if (i === city.districts.length - 1) {
-          elTdCName.style.borderBottom = "1px solid #000";
-        }
         elTr.append(elTdZip, elTdName);
         elTable.appendChild(elTr);
+        cityDistricts.push(districts);
       });
+      tdsDistirict.push(cityDistricts);
     });
 
-    // todo:排版
     content.append(elSelectCities);
     content.append(elSelectDistricts);
     content.appendChild(elTable);
@@ -333,6 +343,29 @@ function showPostal() {
         new Option(`(${dist.zip})${dist.name}`, index),
         index
       );
+    });
+  }
+  function focusCity() {
+    tdsCity.forEach((city) => {
+      city.classList.remove("focus");
+    });
+    tdsCity[cityIndex].classList.add("focus");
+    //focus first district
+    tdsDistirict[cityIndex][0].forEach((x) => x.classList.add("focus"));
+  }
+  function focusDistrict() {
+    focusCity();
+    cancelFocusDistrict();
+    tdsDistirict[cityIndex][districtIndex].forEach((x) =>
+      x.classList.add("focus")
+    );
+  }
+  function cancelFocusDistrict() {
+    tdsDistirict.forEach((pd) => {
+      pd.forEach((td) => {
+        td[0].classList.remove("focus");
+        td[1].classList.remove("focus");
+      });
     });
   }
 }
