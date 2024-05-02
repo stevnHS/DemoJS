@@ -256,13 +256,104 @@ function showRating() {
 }
 
 function showPhotos() {
+  let indexCurrentLocation = 0;
+  const Locations = ["fukuoka", "saga", "nagasaki", "kumamoto", "kagoshima"];
+  const imgs = [];
   (() => {
     initializeContent("廣告輪播");
+    for (let i = 0; i < 5; i++) {
+      const a = document.createElement("a");
+      a.href = `https://www.japan.travel/tw/destinations/kyushu/${Locations[i]}/`;
+      a.target = "_blank";
+      a.style.display = "none";
+      if (i == 0) a.style.display = "block";
+      const img = document.createElement("img");
+      img.setAttribute("src", `Assets/tourImages/${Locations[i]}.jpeg`);
+      img.setAttribute("width", "550px");
+      img.setAttribute("height", "300px");
+      a.appendChild(img);
+      content.appendChild(a);
+      imgs.push(a);
+    }
+    // 跑馬燈
+    let isPaused = false;
+    const btnPlay = document.createElement("button");
+    let intervalChangePhoto = setInterval(function () {
+      displayPhoto(toNext);
+    }, 3000);
 
-    const img = document.createElement("img");
-    img.setAttribute("src", "Assets/山.jpg");
-    content.appendChild(img);
+    // 分頁按鈕
+    {
+      const divBtns = document.createElement("div");
+
+      divBtns.style.display = "flex";
+      divBtns.style.justifyContent = "space-around";
+      divBtns.style.width = "100%";
+      divBtns.style.margin = "10px";
+      for (let i = 0; i < 5; i++) {
+        const btn = document.createElement("button");
+        btn.textContent = i + 1;
+        btn.style.width = "50px";
+        btn.addEventListener("click", () => {
+          // console.log(e.target.innerText - 1);
+          displayPhoto(toId);
+        });
+        divBtns.appendChild(btn);
+      }
+      content.appendChild(divBtns);
+    }
+    // 選頁按鈕
+    {
+      const divManipulateBtns = document.createElement("div");
+      divManipulateBtns.style.width = "100%";
+      divManipulateBtns.style.display = "flex";
+      divManipulateBtns.style.justifyContent = "space-around";
+
+      const btnPrevious = document.createElement("button");
+      btnPrevious.innerText = "上一張";
+      btnPrevious.addEventListener("click", () => {
+        displayPhoto(toPrevious);
+      });
+      btnPlay.innerText = "暫停";
+      btnPlay.addEventListener("click", () => {
+        if (!isPaused) {
+          clearInterval(intervalChangePhoto);
+          isPaused = !isPaused;
+          btnPlay.innerText = "播放";
+        } else {
+          intervalChangePhoto = setInterval(function () {
+            displayPhoto();
+          }, 3000);
+          isPaused = !isPaused;
+          btnPlay.innerText = "暫停";
+        }
+      });
+      const btnNext = document.createElement("button");
+      btnNext.innerText = "下一張";
+      btnNext.addEventListener("click", () => displayPhoto(toNext));
+      divManipulateBtns.append(btnPrevious, btnPlay, btnNext);
+      content.appendChild(divManipulateBtns);
+    }
   })();
+  function displayPhoto(callback = toNext) {
+    imgs[indexCurrentLocation].style.display = "none";
+    callback();
+    imgs[indexCurrentLocation].style.display = "block";
+  }
+  function toPrevious() {
+    if (indexCurrentLocation > 0) indexCurrentLocation--;
+    else indexCurrentLocation = 4;
+  }
+  function toNext() {
+    if (indexCurrentLocation < 4) indexCurrentLocation++;
+    else indexCurrentLocation = 0;
+  }
+  function toFirst() {
+    indexCurrentLocation = 0;
+  }
+  function toId() {
+    indexCurrentLocation = event.target.innerText - 1;
+  }
 }
 
 function showCalendar() {
