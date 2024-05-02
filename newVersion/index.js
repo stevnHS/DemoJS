@@ -357,9 +357,159 @@ function showPhotos() {
 }
 
 function showCalendar() {
+  const selectYear = document.createElement("select");
+  const selectMonth = document.createElement("select");
+  const selectDate = document.createElement("select");
+  const pInfo = document.createElement("p");
+  let timeSelected = new Date();
+  const table = document.createElement("table");
   (() => {
     initializeContent("日曆製作");
+    const divSelects = document.createElement("div");
+
+    // 生成日期選項
+    for (let i = 2010; i <= 2030; i++) {
+      selectYear.appendChild(new Option(i, i));
+    }
+    for (let i = 1; i <= 12; i++) {
+      selectMonth.appendChild(new Option(i, i));
+    }
+    for (let i = 1; i <= 31; i++) {
+      //如果有效才出現在選單，只判斷 29,30,31
+      if (i <= 28) {
+        selectDate.appendChild(new Option(i, i));
+        continue;
+      }
+      if (
+        new Date(
+          `${timeSelected.getFullYear()}-${timeSelected.getMonth() + 1}-${i}`
+        ).getMonth() == timeSelected.getMonth()
+      )
+        selectDate.appendChild(new Option(i, i));
+    }
+
+    selectYear.value = timeSelected.getFullYear();
+    selectMonth.value = timeSelected.getMonth() + 1;
+    selectDate.value = timeSelected.getDate();
+    divSelects.append(selectYear, "年", selectMonth, "月", selectDate, "日");
+    selectYear.addEventListener("change", (e) => changeTimeSelected(e));
+    selectMonth.addEventListener("change", (e) => changeTimeSelected(e));
+    selectDate.addEventListener("change", (e) => changeTimeSelected(e));
+
+    pInfo.innerText = `您選擇的日期是 ${timeSelected.getFullYear()} 年 ${
+      timeSelected.getMonth() + 1
+    } 月 ${timeSelected.getDate()} 日`;
+    content.append(divSelects, pInfo);
+    // TODO畫出當月的月曆
+    displayCalendar();
   })();
+  function changeTimeSelected(e) {
+    timeSelected = new Date(
+      parseInt(selectYear.value),
+      parseInt(selectMonth.value - 1),
+      parseInt(selectDate.value)
+    );
+    // 判斷日期是否有效，重畫日期選單
+    if (e.target != selectDate) {
+      selectDate.innerHTML = "";
+      for (let i = 1; i <= 31; i++) {
+        //如果有效才出現在選單，只判斷 29,30,31
+        if (i <= 28) {
+          selectDate.appendChild(new Option(i, i));
+          continue;
+        }
+        if (
+          new Date(
+            `${timeSelected.getFullYear()}-${timeSelected.getMonth() + 1}-${i}`
+          ).getMonth() == timeSelected.getMonth()
+        ) {
+          selectDate.appendChild(new Option(i, i));
+        }
+      }
+      timeSelected = new Date(
+        parseInt(selectYear.value),
+        parseInt(selectMonth.value - 1),
+        1
+      );
+    }
+
+    pInfo.innerText = `您選擇的日期是 ${timeSelected.getFullYear()} 年 ${
+      timeSelected.getMonth() + 1
+    } 月 ${timeSelected.getDate()} 日`;
+    displayCalendar();
+  }
+  function displayCalendar() {
+    table.innerHTML = "";
+    {
+      const tr = document.createElement("tr");
+      const th0 = document.createElement("th");
+      const th1 = document.createElement("th");
+      const th2 = document.createElement("th");
+      const th3 = document.createElement("th");
+      const th4 = document.createElement("th");
+      const th5 = document.createElement("th");
+      const th6 = document.createElement("th");
+      th0.innerText = "Sun";
+      th1.innerText = "Mon";
+      th2.innerText = "Tue";
+      th3.innerText = "Wed";
+      th4.innerText = "Thu";
+      th5.innerText = "Fri";
+      th6.innerText = "Sat";
+      tr.append(th0, th1, th2, th3, th4, th5, th6);
+
+      table.append(tr);
+      content.appendChild(table);
+    }
+    let currentMonth = new Date(
+      timeSelected.getFullYear(),
+      timeSelected.getMonth()
+    );
+
+    let tr = document.createElement("tr");
+    tr.style.borderBottom = "2px solid #2a2f4f";
+    const prefixTd = document.createElement("td");
+    prefixTd.style.backgroundColor = "gray";
+    prefixTd.colSpan = currentMonth.getDay();
+    tr.appendChild(prefixTd);
+    table.appendChild(tr);
+    let day = 0;
+    day += currentMonth.getDay();
+    for (let i = 1; i <= 31; i++) {
+      //如果有效才出現在選單，只判斷 29,30,31
+      if (i <= 28) {
+        const normalTd = document.createElement("td");
+        normalTd.innerText = i;
+        tr.appendChild(normalTd);
+        if (day == 6) {
+          day = 0;
+          tr = document.createElement("tr");
+          tr.style.borderBottom = "2px solid #2a2f4f";
+          table.appendChild(tr);
+        } else day++;
+        continue;
+      }
+      if (
+        new Date(
+          `${timeSelected.getFullYear()}-${timeSelected.getMonth() + 1}-${i}`
+        ).getMonth() != timeSelected.getMonth()
+      )
+        break;
+      // 增加一個td
+      const normalTd = document.createElement("td");
+      normalTd.innerText = i;
+      tr.appendChild(normalTd);
+      if (day == 6) {
+        day = 0;
+        tr = document.createElement("tr");
+        table.appendChild(tr);
+      } else day++;
+    }
+    const postfixTd = document.createElement("td");
+    postfixTd.colSpan = 7 - day;
+    postfixTd.style.backgroundColor = "gray";
+    tr.appendChild(postfixTd);
+  }
 }
 function showPostal() {
   let cityIndex = 0;
