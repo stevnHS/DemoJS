@@ -477,8 +477,12 @@ function showCalendar() {
     day += currentMonth.getDay();
     for (let i = 1; i <= 31; i++) {
       //如果有效才出現在選單，只判斷 29,30,31
+      const normalTd = document.createElement("td");
+      normalTd.style.textAlign = "center";
+      if (i == timeSelected.getDate()) {
+        normalTd.style.backgroundColor = "#CC6CE7";
+      }
       if (i <= 28) {
-        const normalTd = document.createElement("td");
         normalTd.innerText = i;
         tr.appendChild(normalTd);
         if (day == 6) {
@@ -496,7 +500,6 @@ function showCalendar() {
       )
         break;
       // 增加一個td
-      const normalTd = document.createElement("td");
       normalTd.innerText = i;
       tr.appendChild(normalTd);
       if (day == 6) {
