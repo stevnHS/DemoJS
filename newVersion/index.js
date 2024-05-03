@@ -594,6 +594,7 @@ function showPostal() {
       city.classList.remove("focus");
     });
     tdsCity[cityIndex].classList.add("focus");
+    content.scrollTo({ top: tdsCity[cityIndex].offsetTop, behavior: "smooth" });
     //focus first district
     tdsDistirict[cityIndex][0].forEach((x) => x.classList.add("focus"));
   }
